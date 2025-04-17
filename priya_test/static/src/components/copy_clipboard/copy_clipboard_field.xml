@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+         <t t-name="priya_test.CustomCopyClipboardField">
+        <div class="d-flex rounded-2 overflow-hidden">
+            <Field t-props="fieldProps" />
+            <CopyButton
+                className="copyButtonClassName"
+                content="value"
+                icon="copyButtonIcon"
+                copyText="copyText"
+                disabled="disabled"
+                successText="successText"
+            />
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Server Action: Send Email to Salesperson -->
+    <record
+        id="action_send_email_to_salesperson_on_delivery_done"
+        model="ir.actions.server"
+    >
+        <field name="name">Send Email to Salesperson</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="binding_model_id" ref="stock.model_stock_picking" />
+        <field name="state">code</field>
+        <field name="code">
+            if record.sale_id and record.sale_id.user_id:
+                template = env.ref('priya_test.email_template_delivery_done')
+                if template:
+                    template.send_mail(record.id, force_send=True)
+        </field>
+    </record>
+
+    <!-- Automated Action: Trigger on Delivery Done -->
+    <record id="automated_action_send_email_on_picking_done" model="base.automation">
+        <field name="name">Send Email to Salesperson on Delivery Done</field>
+        <field name="model_id" ref="stock.model_stock_picking" />
+        <field name="trigger">on_create_or_write</field>
+        <field name="filter_domain">[('state', '=', 'done')]</field>
+        <field
+            name="action_server_ids"
+            eval="[(4, ref('action_send_email_to_salesperson_on_delivery_done'))]"
+        />
+        <field name="active" eval="True" />
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mrp_production_form_view_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.form.inherit</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_producing']" position="attributes">
+                <attribute name="readonly">state != 'draft'</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_change_production_qty_wizard_inherit" model="ir.ui.view">
+        <field name="name">change.production.qty.inherit</field>
+        <field name="model">change.production.qty</field>
+        <field name="inherit_id" ref="mrp.view_change_production_qty_wizard" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='product_qty']" position="attributes">
+                <attribute
+                    name="readonly"
+                >mo_id.state != 'draft' and mo_id.origin</attribute>
+            </xpath>
+            <xpath expr="//button[@name='change_prod_qty']" position="attributes">
+                <attribute name="invisible">mo_id.state != 'draft'</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
